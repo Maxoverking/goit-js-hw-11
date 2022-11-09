@@ -1,0 +1,33 @@
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 52px;
+    background: linear-gradient(45deg, #37ecba, #72afd3);
+}
+input{
+    position: relative;
+    border: none;
+    outline: none;
+    height: 28px;
+    border-radius: 2px;
+}
+button{
+  padding: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 2px;
+  // position: absolute;
+  // left: 56%;
+  border: none;
+  background-color: white;
+}
+.grey-btn{
+  background-color: #c9c9c9;
+}
+.icon{
+  fill: #47494d;
+}
+
+
