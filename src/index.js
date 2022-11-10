@@ -32,10 +32,7 @@ function getImages(evt) {
         }  
         const lightbox = new SimpleLightbox('.photo-card a');
         lightbox.refresh();
-        
     }).catch(error => console.log(error))
-        form.reset();
-        blockSearchBtn();
     
 }
 
@@ -44,7 +41,7 @@ async function requestHTTP(inputText) {
     const BASE_URL = `https://pixabay.com/api/?key=31213238-ba438b7a093e03eb97bf90c50`;
     const OPTION = `q=${inputText}&image_type=photo&orientation=horizontal&safesearch=true`;
       try {
-          const response = await axios.get(`${BASE_URL}&${OPTION}`);
+          const response = await axios.get(`${BASE_URL}&${OPTION}&page=1&per_page=40`);
           return response;        
       } catch (error) {
           
