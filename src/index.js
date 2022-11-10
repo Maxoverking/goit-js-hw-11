@@ -1,8 +1,8 @@
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-// Описан в документации
 import SimpleLightbox from "simplelightbox";
-// Дополнительный импорт стилей
 import "simplelightbox/dist/simple-lightbox.min.css";
+const axios = require('axios').default;
+
 
 
 const form = document.querySelector('#search-form');
@@ -11,57 +11,53 @@ formBtn.setAttribute('disabled', true);
 formBtn.style.backgroundColor = "#c9c9c9";
 
 const formInput = document.querySelector('#search-form input');
-const gallery = document.querySelector('.gallery')
+const gallery = document.querySelector('.gallery');
 
 
 form.addEventListener('input', controlBtn);
 form.addEventListener('submit', getImages);
 
-
 function getImages(evt) {
     evt.preventDefault();
-    // cleanHtml()
-  
-    const formValue = evt.currentTarget;
-    const inputText = formValue.elements.searchQuery.value;
+    cleanHtml();
+    const inputText = evt.currentTarget.elements.searchQuery.value;
 
-    const BASE_URL = `https://pixabay.com/api/?key=31213238-ba438b7a093e03eb97bf90c50`;
-    const OPTION = `q=${inputText}&image_type=photo&orientation=horizontal&safesearch=true`;
-
-    fetch(`${BASE_URL}&${OPTION}`)
-        .then(response => {return response.json()})
-        .then(data => {
-            console.log(data);
-            if (data.total === 0) {  
+    requestHTTP(inputText).then(({ data }) => {
+        if (data.total === 0) {  
                 Notify.failure("Sorry, there are no images matching your search query. Please try again.")
                 return;
             } else {
                 Notify.success(`Hooray! We found ${data.totalHits} images`);
                 markupCards(data);
-            }  
-            const ref = document.querySelectorAll('.photo-card a')
-            new SimpleLightbox (ref)
-            // createGalleryItems(data);
-        })
-        .catch(error => console.log(error));    
-    form.reset();
-    blockSearchBtn();
+        }  
+        const lightbox = new SimpleLightbox('.photo-card a');
+        lightbox.refresh();
+        
+    }).catch(error => console.log(error))
+        form.reset();
+        blockSearchBtn();
     
 }
 
 
-
-console.log("🚀 ~ SimpleLightbox", SimpleLightbox);
+async function requestHTTP(inputText) {
+    const BASE_URL = `https://pixabay.com/api/?key=31213238-ba438b7a093e03eb97bf90c50`;
+    const OPTION = `q=${inputText}&image_type=photo&orientation=horizontal&safesearch=true`;
+      try {
+          const response = await axios.get(`${BASE_URL}&${OPTION}`);
+          return response;        
+      } catch (error) {
+          
+    console.error(error);
+  }
+}
 
 
 function markupCards(data) {
     const dataArray = data.hits;
 
-
    const markup = dataArray.map(object => {
         const { webformatURL, largeImageURL, tags, likes, views, comments, downloads } = object;
-
-
        return `<div class="photo-card">
     <a href="${largeImageURL}">
     <img src="${webformatURL}" alt="${tags}" loading="lazy"/></a>
