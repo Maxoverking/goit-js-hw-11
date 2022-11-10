@@ -20,7 +20,7 @@ form.addEventListener('submit', getImages);
 
 function getImages(evt) {
     evt.preventDefault();
-    cleanHtml()
+    // cleanHtml()
   
     const formValue = evt.currentTarget;
     const inputText = formValue.elements.searchQuery.value;
@@ -39,6 +39,8 @@ function getImages(evt) {
                 Notify.success(`Hooray! We found ${data.totalHits} images`);
                 markupCards(data);
             }  
+            const ref = document.querySelectorAll('.photo-card a')
+            new SimpleLightbox (ref)
             // createGalleryItems(data);
         })
         .catch(error => console.log(error));    
@@ -47,26 +49,22 @@ function getImages(evt) {
     
 }
 
-// new SimpleLightbox (".gallery div")
-// function createGalleryItems(data) {
-//      const dataArray = data.hits;
-//     const markupBigImg = dataArray.map(({largeImageURL}) => { 
-//         return `<a class="gallery__item" href="${largeImageURL}">
-//        <img class="gallery__image" src="" alt="" />
-//      </a>`}).join('');  
-//     gallery.insertAdjacentHTML('beforeend',markupBigImg);
-    
-// }
+
+
+console.log("🚀 ~ SimpleLightbox", SimpleLightbox);
+
 
 function markupCards(data) {
     const dataArray = data.hits;
 
+
    const markup = dataArray.map(object => {
         const { webformatURL, largeImageURL, tags, likes, views, comments, downloads } = object;
 
-        console.log("🚀 ~ largeImageURL", largeImageURL);
-        return `<div class="photo-card" >
-  <img src="${webformatURL}" alt="${tags}" loading="lazy"/>
+
+       return `<div class="photo-card">
+    <a href="${largeImageURL}">
+    <img src="${webformatURL}" alt="${tags}" loading="lazy"/></a>
   <div class="info" >
     <p class="info-item">
       <b>Likes</b>${likes}
