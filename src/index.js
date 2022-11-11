@@ -2,6 +2,8 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import {requestHTTP} from './fetchPicture'
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
+let lightbox = new SimpleLightbox('.gallery a');
+
 
 const form = document.querySelector('#search-form');
 const formInput = document.querySelector('#search-form input');
@@ -14,7 +16,7 @@ const gallery = document.querySelector('.gallery');
 
 form.addEventListener('input', showSearchBtn);
 form.addEventListener('submit', getImages);
-loadMoreBtn.addEventListener('click', getMorePicture);
+loadMoreBtn.addEventListener('click', loadMoreData);
 
 
 let PAGE_COUNTER = 1;
@@ -34,13 +36,13 @@ function getImages(evt) {
       Notify.success(`Hooray! We found ${data.totalHits} images`);
       markupCards(data);
       loadMoreBtn.style.display = "block";
-      let lightbox = new SimpleLightbox('.gallery a');
+      
       lightbox.refresh();
     }
   }).catch(error => console.log(error)); 
 }
 
-function getMorePicture() {
+function loadMoreData() {
    const inputText = formInput.value;
   PAGE_COUNTER ++;
   requestHTTP(inputText, PAGE_COUNTER).then(({ data }) => {
@@ -48,7 +50,6 @@ function getMorePicture() {
       loadMoreBtn.style.display = "none";
     } else {
        markupCards(data);
-    let lightbox = new SimpleLightbox('.gallery a');
     lightbox.refresh();
     } 
   }).catch(error => console.log(error));
