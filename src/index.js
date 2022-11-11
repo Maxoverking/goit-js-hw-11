@@ -29,7 +29,7 @@ function getImages(evt) {
 
   const inputText = formInput.value.trim();
   requestHTTP(inputText, PAGE_COUNTER).then(({ data }) => {
-    console.log(data.hits);
+    console.log(data.hits);   
     if (data.total === 0) {
       Notify.failure("Sorry, there are no images matching your search query. Please try again.")
       return;
@@ -47,13 +47,18 @@ function loadMoreData() {
    const inputText = formInput.value;
   PAGE_COUNTER ++;
   requestHTTP(inputText, PAGE_COUNTER).then(({ data }) => {
-    if (data.hits < 40) {
+     console.log("🚀 ~ data", data.hits.length);
+    if (data.hits.length < 40) {
       loadMoreBtn.style.display = "none";
     } else {
        markupCards(data);
     lightbox.refresh();
     } 
   }).catch(error => console.log(error));
+
+ 
+
+
 }
 
 function markupCards(data) {
@@ -104,15 +109,6 @@ function blockSearchBtn() {
     formBtn.setAttribute('disabled', true);
     formBtn.style.backgroundColor = "#c9c9c9";
 }
-
-
-
-
-
-
-
-
-
 
 // async function requestHTTP(inputText) {
 //     const BASE_URL = `https://pixabay.com/api/?key=31213238-ba438b7a093e03eb97bf90c5A0`;
