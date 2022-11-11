@@ -9,12 +9,14 @@ const formBtn = document.querySelector('#search-form button');
 formBtn.setAttribute('disabled', true);
 formBtn.style.backgroundColor = "#c9c9c9";
 
-const loadMoreBtn = document.querySelector('.load-more')
+const loadMoreBtn = document.querySelector('.load-more');
 const gallery = document.querySelector('.gallery');
 
 form.addEventListener('input', showSearchBtn);
 form.addEventListener('submit', getImages);
-loadMoreBtn.addEventListener('click', getMorePicture)
+loadMoreBtn.addEventListener('click', getMorePicture);
+
+
 let PAGE_COUNTER = 1;
 
 function getImages(evt) {
@@ -37,6 +39,7 @@ function getImages(evt) {
     }
   }).catch(error => console.log(error)); 
 }
+
 function getMorePicture() {
    const inputText = formInput.value;
   PAGE_COUNTER ++;
@@ -88,16 +91,17 @@ function showSearchBtn() {
         formBtn.style.backgroundColor = "white"; 
     }
 }
-function blockSearchBtn() {
-    formBtn.setAttribute('disabled', true);
-    formBtn.style.backgroundColor = "#c9c9c9";
-}
 
 function updateSearch() {
   gallery.innerHTML = "";
   PAGE_COUNTER = 1
   blockSearchBtn()
   loadMoreBtn.style.display = "none";
+}
+
+function blockSearchBtn() {
+    formBtn.setAttribute('disabled', true);
+    formBtn.style.backgroundColor = "#c9c9c9";
 }
 
 
