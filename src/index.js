@@ -1,5 +1,6 @@
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import {requestHTTP} from './fetchPicture'
+import { requestHTTP } from './fetchPicture'
+
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 let lightbox = new SimpleLightbox('.gallery a');
@@ -79,8 +80,7 @@ function markupCards(data) {
     </p>
   </div>
 </div> `}).join('');
-  gallery.innerHTML+= markup;
-  
+  gallery.innerHTML+= markup; 
 }
 
 function showSearchBtn() {
