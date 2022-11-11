@@ -4,7 +4,6 @@ img {
   height: 200px;
   
 }
-
 .container{
   display: flex;
   justify-content: center;
@@ -13,10 +12,13 @@ img {
   
   background: linear-gradient(45deg, #37ecba, #72afd3);
 }
-.container-cards{
-margin: 0px 10px;
-}
+.wrap{
+  display: flex;
 
+  justify-content: center;
+
+  
+}
 .gallery{
   display: flex;
   flex-wrap: wrap;
@@ -24,7 +26,6 @@ margin: 0px 10px;
   
 }  
 input{
-    position: relative;
     width: 240px;
     height: 32px;
     border: none;
@@ -33,7 +34,7 @@ input{
     border-bottom-left-radius: 4px;
 }
 button{
-  position: absolute;
+  float: right;
   padding: 0;
   width: 34px;
   height: 32px;
@@ -43,15 +44,18 @@ button{
   border: none;
   background-color: white;
 }
-// .load-more{
-//   width: 96px;
-//   height: 52px;
-//    background-color: #9ae1d8; 
-// }
+.load-more{
+  display: none;
+  width: 96px;
+  height: 32px;
+  margin-top: 10px;
+  border-radius: 6px;
+  background-color: #9ae1d8; 
+}
 
-// .grey-btn{
-//   background-color: #c9c9c9;
-// }
+.grey-btn{
+  background-color: #c9c9c9;
+}
 .icon{
   fill: #47494d;
 }
