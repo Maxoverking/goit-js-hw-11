@@ -1,4 +1,4 @@
-const axios = require('axios').default;
+import axios from 'axios';
 
 // Делаем запрос на сервер     // Making a request to the server
 export const requestHTTP = async (inputText, PAGE_COUNTER) => {
