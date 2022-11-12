@@ -19,7 +19,11 @@ const gallery = document.querySelector('.gallery');
 
 form.addEventListener('input', showSearchBtn);//Показываем кнопку поиска  //Showing search button
 form.addEventListener('submit', getImages);//Получаем запрос // Receiving a request 
-loadMoreBtn.addEventListener('click', loadMoreData);//Загружаем больше данных  // Loading more data 
+
+//loadMoreBtn.addEventListener('click', loadMoreData); <--//Загружаем больше данных  // Loading more data 
+//Кнопка LOAD MORE нужно расскоментировать
+
+window.addEventListener('scroll', infinityScroll); // Загружаем больше данных  // Loading more data
 
 let PAGE_COUNTER = 1;
 
@@ -36,7 +40,9 @@ function getImages(evt) {
     } else {
       Notify.success(`Hooray! We found ${data.totalHits} images`);
       markupCards(data); //Добавляем разметку  //Add mark-up
-      loadMoreBtn.style.display = "block";
+
+      // loadMoreBtn.style.display = "block"; //<-- Кнопка LOAD MORE
+
       lightbox.refresh();
     }
   }).catch(error => console.log(error)); 
@@ -54,6 +60,19 @@ function loadMoreData() {
     lightbox.refresh();
     } 
   }).catch(error => console.log(error));
+}
+
+//Бесконечный скрол //Infinity scroll
+function infinityScroll() {
+    const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
+  // const scrl = scrollHeight - clientHeight;           
+  // console.log("🚀 ~ scrl", scrl);
+  if (scrollHeight - clientHeight === scrollTop) {
+    loadMoreData();
+  }
+  // console.log("🚀 ~ scrollHeigth", scrollHeight);
+  // console.log("🚀 ~ scrollTop", scrollTop);
+  // console.log("🚀 ~ clientHeight", clientHeight);
 }
 
 //Макет разметки //Example of markup 
@@ -81,7 +100,7 @@ function markupCards(data) {
     </p>
   </div>
 </div> `}).join('');
-  gallery.innerHTML+= markup; 
+  gallery.insertAdjacentHTML('beforeend', markup);
 }
 
 //Показываем кнопку поиска  //Showing search button
@@ -94,17 +113,15 @@ function showSearchBtn() {
         formBtn.style.backgroundColor = "white"; 
     }
 }
-
+//Прячем кнопку поиска  //Hiding the search button
+function blockSearchBtn() {
+    formBtn.setAttribute('disabled', true);
+    formBtn.style.backgroundColor = "#c9c9c9";
+}
 //Обновляем документHTML //Update the documentHTML
 function updateHTML() {
   gallery.innerHTML = "";
   PAGE_COUNTER = 1
   blockSearchBtn()
   loadMoreBtn.style.display = "none";
-}
-
-//Прячем кнопку поиска  //Hiding the search button
-function blockSearchBtn() {
-    formBtn.setAttribute('disabled', true);
-    formBtn.style.backgroundColor = "#c9c9c9";
 }
